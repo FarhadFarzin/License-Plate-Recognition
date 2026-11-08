@@ -14,9 +14,29 @@ for contour in contours:
     if area > 800 and 2 < w / h < 5 :
         
         cv2.rectangle(img,(x,y),(x+w , y+h),(0,255,0),2)
+        
+        plate = img[y : y + h , x : x + w]
+        
+        plate_resize = cv2.resize(plate,None ,fx=2,fy=2)
+        
+        plate = plate_resize[22:-28, 15:-15]
+        
+        gray = cv2.cvtColor(plate, cv2.COLOR_BGR2GRAY)
+        
+        blur = cv2.GaussianBlur(gray, (5,5),0)
+        
+        _ , thresh = cv2.threshold(blur,120,255,cv2.THRESH_BINARY)
+        
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT , (5,5))
+        
+        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE , kernel)
+        
+       
+        
+        
 
 
 
-cv2.imshow('Orginal',img)
+cv2.imshow('Orginal',thresh)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
