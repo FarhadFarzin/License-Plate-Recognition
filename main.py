@@ -1,4 +1,6 @@
 import cv2
+import pytesseract
+
 img = cv2.imread('D:/Python_Projects/license_plate_recognition/images/input/car.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blur = cv2.blur(gray, (3,3))
@@ -31,6 +33,11 @@ for contour in contours:
         
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE , kernel)
         
+        text = pytesseract.image_to_string(thresh , lang='eng' , config= '--psm 7')
+        
+        print(text)
+        
+      
        
         
         
