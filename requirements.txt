@@ -1,0 +1,4 @@
+OpenCV
+numpy
+glob
+os
